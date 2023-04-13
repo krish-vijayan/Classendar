@@ -1,0 +1,23 @@
+{
+  "pins" : [
+    {
+      "identity" : "shuffleit#shuffledeck",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/dscyrescotti/ShuffleIt#shuffledeck",
+      "state" : {
+        "branch" : "main",
+        "revision" : "1c564cc6e3367ad9bf8338e1212b2db5a592f3d2"
+      }
+    },
+    {
+      "identity" : "tocropviewcontroller",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/TimOliver/TOCropViewController",
+      "state" : {
+        "revision" : "d0470491f56e734731bbf77991944c0dfdee3e0e",
+        "version" : "2.6.1"
+      }
+    }
+  ],
+  "version" : 2
+}
