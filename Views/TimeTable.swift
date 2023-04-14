@@ -10,17 +10,19 @@ import SwiftUI
 import ShuffleDeck
 
 struct TimeTable: View{
+    @Binding var finalTimetable: [String: [[String]]]
+    
     //    AngularGradient(gradient: Gradient(colors: [.green, .blue, .black, .green, .blue, .black, .green]), center: .center)
     let days = [0,1,2,3,4]
-       
     let gradients = [LinearGradient(colors: [.yellow, .orange],startPoint: .top, endPoint: .center),
                      LinearGradient(colors: [.orange, .red],startPoint: .top, endPoint: .center),
                      LinearGradient(colors: [.red, .purple],startPoint: .top, endPoint: .center),
                      LinearGradient(colors: [.purple, .indigo],startPoint: .top, endPoint: .center),
                      LinearGradient(colors: [.indigo, .green],startPoint: .top, endPoint: .center),
     ]
-    var daysZ = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+    var weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
     @State var curr = 0
+    @State var offSet = 100
     var body: some View {
         ZStack{
             
@@ -45,18 +47,28 @@ struct TimeTable: View{
                 .foregroundColor(.black)
             
             VStack{
-                Text(daysZ[curr])
+                Text(weekdays[curr])
                     .font(.system(size: 50))
                     .fontWeight(.semibold)
                     .foregroundStyle(gradients[curr])
                 
-                
-                
-                ShuffleDeck(
-                    days,
-                    initialIndex: 0
-                ) { day in
-                    ZStack{
+                ZStack{
+                    
+                    
+                    ShuffleDeck(
+                        days,
+                        initialIndex: 0
+                    ) { day in
+                        
+                        
+                        //                    VStack{
+                        //
+                        //                        Weekday(gradient:  gradients[day], course: "course", timeFrame: "8:30AM-9:30AM")
+                        //                        Weekday(gradient:  gradients[day], course: "course", timeFrame: "8:30AM-9:30AM")
+                        //                        Weekday(gradient:  gradients[day], course: "course", timeFrame: "8:30AM-9:30AM")
+                        //                        Weekday(gradient:  gradients[day], course: "course", timeFrame: "8:30AM-9:30AM")
+                        //
+                        //                    }
                         
                         Text("")
                             .frame(width: 300, height: 500)
@@ -64,42 +76,43 @@ struct TimeTable: View{
                                 gradients[day]
                             )
                             .cornerRadius(30)
-                        VStack{
                         
-                            Weekday(gradient: gradients[day], course: "Test", timeFrame: "8:30AM-9:30AM")
-                            Weekday(gradient: gradients[day], course: "Test", timeFrame: "8:30AM-9:30AM")
-                            Weekday(gradient: gradients[day], course: "Test", timeFrame: "8:30AM-9:30AM")
-                            Weekday(gradient: gradients[day], course: "Test", timeFrame: "8:30AM-9:30AM")
-                        }
-
-                      
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
                     }
+                    .onShuffleDeck { (context: ShuffleDeckContext) in
+                        /* some stuff */
+                        curr = context.index
+                    }
+                    .shadow(radius: 10)
                     
-                
-                    
-                    
-                    
-                                                
-                    
-                    
-                    
+                    VStack{
+                        ForEach(finalTimetable[weekdays[curr]]![0], id:\.self){ course in
+                            Weekday(gradient:  gradients[curr], course: course, timeFrame: "8:30AM-9:30AM")
+                        }
+                    }
                 }
-                .onShuffleDeck { (context: ShuffleDeckContext) in
-                    /* some stuff */
-                    curr = context.index
-                }
-                .shadow(radius: 10)
             }
+            
         }
     }
     
     
+    
 }
-struct TimeTable_Previews: PreviewProvider {
-    static var previews: some View {
-        TimeTable()
-    }
-}
+//struct TimeTable_Previews: PreviewProvider {
+//    static var previews: some View {
+//        TimeTable()
+//    }
+//}
 struct Monday: Shape {
     func path(in rect: CGRect) -> Path {
         var path = Path()
@@ -123,16 +136,25 @@ struct Weekday: View {
     let colors = [Color.yellow.opacity(0.7), Color.orange, Color.red, Color.purple, Color.indigo]
     var body: some View  {
         HStack{
-        Text(course)
-        Text(timeFrame)
-
+            Text(course)
+            Text(timeFrame)
+            
+        }
+        .fontWeight(.light)
+        .frame(width: 250, height: 70)
+        .background(gradient)
+        .clipShape(RoundedRectangle(cornerRadius: 10.0))
+        .shadow(radius: 8.0)
+        .padding(10)
     }
-    .fontWeight(.light)
-    .frame(width: 250, height: 70)
-    .background(gradient)
-    .clipShape(RoundedRectangle(cornerRadius: 10.0))
-    .shadow(radius: 8.0)
-    .padding(10)
+    
+}
+struct ListView: View {
+    let items = ["Item 1", "Item 2", "Item 3", "Item 4", "Item 5"]
+    
+    var body: some View {
+        List(items, id: \.self) { item in
+            Text(item)
+        }
     }
-      
 }

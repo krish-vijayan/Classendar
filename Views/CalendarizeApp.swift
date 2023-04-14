@@ -9,10 +9,11 @@ import SwiftUI
 
 @main
 struct CalendarizeApp: App {
+    @State var finalTimetable: [String: [[String]]] = ["Monday": [[],[]],"Tuesday": [[],[]], "Wednesday":[[],[]], "Thursday":[[],[]], "Friday":[[],[]] ]
     var body: some Scene {
         WindowGroup {
             HomeView()
-//            TimeTable()
+//            TimeTable(finalTimetable:$finalTimetable)
         }
     }
 }

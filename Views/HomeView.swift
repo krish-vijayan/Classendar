@@ -26,9 +26,9 @@ struct HomeView: View {
     @State private var days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", ""]
     @State private var courses: [String?] = []
     @State private var timings: [String?] = []
-    @State private var finalTimetable: [String: [[String]]] = ["Monday": [[],[]],"Tuesday": [[],[]], "Wednesday":[[],[]], "Thursday":[[],[]], "Friday":[[],[]] ]
     @State private var checkIfEmpty: [String] = []
     @State private var done: Bool = false
+    @State var finalTimetable: [String: [[String]]] = ["Monday": [[],[]],"Tuesday": [[],[]], "Wednesday":[[],[]], "Thursday":[[],[]], "Friday":[[],[]] ]
     
     
     func imageCropped(image: UIImage){
@@ -96,7 +96,7 @@ struct HomeView: View {
                         .padding()
                         
                         if (day == 5){
-                            NavigationLink(destination: TimeTable().navigationBarHidden(true)){
+                            NavigationLink(destination: TimeTable(finalTimetable: $finalTimetable).navigationBarHidden(true)){
                                 Text("Done")
                             }
                         }
@@ -119,11 +119,11 @@ struct HomeView: View {
         }
     }
     
-    struct HomeView_Previews: PreviewProvider {
-        static var previews: some View {
-            HomeView()
-        }
-    }
+//    struct HomeView_Previews: PreviewProvider {
+//        static var previews: some View {
+//            HomeView()
+//        }
+//    }
     
     
     
