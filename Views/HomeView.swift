@@ -9,24 +9,20 @@ import SwiftUI
 
 struct HomeView: View {
     @State var image: UIImage?
-    var imageUI: UIImage?
     @State var show = false
     @State var imageData : Data = .init(capacity: 0)
     @State var imagePicker = false
     @State var imageCropper = false
     @State var source : UIImagePickerController.SourceType = .photoLibrary
-    
-    @State private var images: UIImage?
     @State private var showImageCropper = false
     @State private var day = 0
     @State private var imageArr: [UIImage?] = []
     @State private var timetable: [String : [String?]] = [:]
-    @State private var days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", ""]
-    @State private var checkIfEmpty: [String] = []
     @State private var done: Bool = false
     @State var finalTimetable: [String: [String]] =  UserDefaults.standard.dictionary(forKey: "UserCalendar") as? [String: [String]] ?? ["Monday": [],"Tuesday": [], "Wednesday":[], "Thursday":[], "Friday":[] ]
     @State var userCalendar: Bool = false
-    
+    var imageUI: UIImage?
+
     @State private var showTutorial = false
     
     var body: some View {
@@ -92,7 +88,7 @@ struct HomeView: View {
                                     }
                                 }else {
                                     Button(action: {self.imageCropper = true}){
-                                        Text(days[day])
+                                        Text(Constants.days[day])
                                             .font(.title)
                                             .fontWeight(.semibold)
                                             .frame(height: 200)
@@ -117,18 +113,22 @@ struct HomeView: View {
                                 }
                                 .onChange(of: timetable){ _ in
                                     if (timetable.isEmpty == false){
-                                        for word in timetable[days[day-1]]!{
+                                        for word in timetable[Constants.days[day-1]]!{
+                                            //Regex expression for class code
                                             let courseCode = /^[A-Z]{2,5}\s[0-9]{2,4}/
                                             if let course = word!.firstMatch(of: courseCode){
-                                                finalTimetable[days[self.day-1]]!.append(String(course.output))
+                                                //Appending to dictionary with key being current weekday
+                                                finalTimetable[Constants.days[self.day-1]]!.append(String(course.output))
                                             }
+                                            //Regex expression single time i.e 8:30AM (sometimes time range is split into two lines hence vision will return two strings for one time range)
                                             let singleTime = /(?-)\s*[0-9]{0,2}:[0-9]{0,2}\s*[A-Za-z]{2}\s*(?-)/
                                             if let timing = word!.firstMatch(of: singleTime){
-                                                finalTimetable[days[self.day-1]]!.append(String(timing.output))
+                                                finalTimetable[Constants.days[self.day-1]]!.append(String(timing.output))
                                             }
+                                            //Regex expression for time range i.e 8:30AM - 9:30AM
                                             let timeRange = /\s*[0-9]{0,2}:[0-9]{0,2}\s*[A-Za-z]{2}\s*-\s*[0-9]{0,2}:[0-9]{0,2}\s*[A-Za-z]{2}/
                                             if let timing = word!.firstMatch(of: timeRange){
-                                                finalTimetable[days[self.day-1]]!.append(String(timing.output))
+                                                finalTimetable[Constants.days[self.day-1]]!.append(String(timing.output))
                                             }
                                         }
                                     }
@@ -159,6 +159,7 @@ struct HomeView: View {
                                     
                                 }
                                 Button(action: {self.showTutorial.toggle()}){
+                                    //Showing introduction/tutorial sheet
                                     Label("", systemImage: "questionmark.circle")
                                         .font(.title)
                                 }
@@ -178,7 +179,7 @@ struct HomeView: View {
                 }
             }.sheet(isPresented: $showTutorial, content: {
                 CalendarizeTutorial()
-
+                
             })
             
         }
@@ -198,10 +199,6 @@ struct CalendarizeTutorial: View {
     @Environment(\.presentationMode) var presentationMode
     @State var step = 0
     
-    let steps = ["Either grab your calendar from your photo library, or use the camera to take a picture of it.", "For each day of the week crop your classes for that day as seen above.", "Click Done and watch the magic happen!"]
-    let stepScreenshots = ["step-0","step-1", "step-2"]
-    
-    
     var body: some View {
         ZStack {
             VStack {
@@ -210,7 +207,7 @@ struct CalendarizeTutorial: View {
                     .font(.title)
                     .fontWeight(.semibold)
                     .padding()
-                Image(uiImage: UIImage(named: stepScreenshots[step])!)
+                Image(uiImage: UIImage(named: Constants.stepScreenshots[step])!)
                     .resizable()
                     .frame(width: 200, height: 400)
                 Spacer()
@@ -220,28 +217,28 @@ struct CalendarizeTutorial: View {
                         .underline()
                         .fontWeight(.semibold)
                     Spacer()
-                    Text("\(steps[step])")
+                    Text("\(Constants.steps[step])")
                         .frame(width: 300)
                         .lineLimit(2)
                         .minimumScaleFactor(0.8)
                         .multilineTextAlignment(.center)
                     Spacer()
                 }
-               Spacer()
+                Spacer()
                 HStack{
                     Button("Back"){
                         if (step > 0 ){
                             step -= 1
                         }
                     }
-                    if (step == steps.count - 1) {
+                    if (step == Constants.steps.count - 1) {
                         Button("Start"){
                             
                             self.presentationMode.wrappedValue.dismiss()
                         }
                     }else {
                         Button("Next"){
-                            if (step < steps.count - 1 ){
+                            if (step < Constants.steps.count - 1 ){
                                 step += 1
                             }
                         }
@@ -251,7 +248,7 @@ struct CalendarizeTutorial: View {
                 .padding()
             }
         }
-
+        
     }
 }
 

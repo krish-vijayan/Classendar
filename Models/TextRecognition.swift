@@ -12,8 +12,7 @@ import UIKit
 
 
 struct TextRecognition {
-   
-    
+    //function returns the text from inputed image
     static func recognizeText(image: UIImage?) -> [String?]{
         var output: [String?] = []
         // Get the CGImage on which to perform requests.

@@ -40,10 +40,8 @@ struct ImagePicker: UIViewControllerRepresentable {
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
             let image = info[.originalImage] as! UIImage
             let data = image.pngData()
-            //            showCrop(image: UIImage(data: data!)!)
             self.parent.image = data!
             self.parent.imageUI = image
-//            self.parent.imageCropper = true
             self.parent.show.toggle()
         }
     }

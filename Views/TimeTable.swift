@@ -11,8 +11,8 @@ import ShuffleDeck
 
 struct TimeTable: View{
     @Binding var finalTimetable: [String: [String]]
+    @State var curr = 0
     
-    //    AngularGradient(gradient: Gradient(colors: [.green, .blue, .black, .green, .blue, .black, .green]), center: .center)
     let days = [0,1,2,3,4]
     let gradients = [LinearGradient(colors: [.yellow, .orange],startPoint: .top, endPoint: .center),
                      LinearGradient(colors: [.orange, .red],startPoint: .top, endPoint: .center),
@@ -20,12 +20,9 @@ struct TimeTable: View{
                      LinearGradient(colors: [.purple, .indigo],startPoint: .top, endPoint: .center),
                      LinearGradient(colors: [.indigo, .green],startPoint: .top, endPoint: .center),
     ]
-    var weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
-    @State var curr = 0
-    @State var offSet = 100
     var body: some View {
         ZStack{
-        
+            
             Circle()
                 .frame(width: 400, height: 400)
                 .foregroundStyle(gradients[curr])
@@ -46,7 +43,7 @@ struct TimeTable: View{
                 .foregroundColor(.black)
             
             VStack{
-                Text(weekdays[curr])
+                Text(Constants.weekdays[curr])
                     .font(.system(size: 50))
                     .fontWeight(.semibold)
                     .foregroundStyle(gradients[curr])
@@ -59,47 +56,28 @@ struct TimeTable: View{
                         initialIndex: 0
                     ) { day in
                         
-                        
-                        //                    VStack{
-                        //
-                        //                        Weekday(gradient:  gradients[day], course: "course", timeFrame: "8:30AM-9:30AM")
-                        //                        Weekday(gradient:  gradients[day], course: "course", timeFrame: "8:30AM-9:30AM")
-                        //                        Weekday(gradient:  gradients[day], course: "course", timeFrame: "8:30AM-9:30AM")
-                        //                        Weekday(gradient:  gradients[day], course: "course", timeFrame: "8:30AM-9:30AM")
-                        //
-                        //                    }
-                        
                         Text("")
                             .frame(width: 300, height: 500)
                             .background(
                                 gradients[day]
                             )
-                            .cornerRadius(30)
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+                            .cornerRadius(30)        
                     }
                     .onShuffleDeck { (context: ShuffleDeckContext) in
-                        /* some stuff */
                         curr = context.index
                     }
                     .shadow(radius: 10)
                     
                     VStack{
-                        ForEach(Array(finalTimetable[weekdays[curr]]!.enumerated()), id:\.offset){ index, course in
+                        ForEach(Array(finalTimetable[Constants.weekdays[curr]]!.enumerated()), id:\.offset){ index, course in
+                            //Reading next two indicies to get time range for class
                             let startIndex = index + 1
                             let endIndex = index + 2
+                            //Reading class code
                             if let courseCode = course.first, courseCode.isLetter {
-                                let startTime = startIndex < finalTimetable[weekdays[curr]]!.count ? finalTimetable[weekdays[curr]]![startIndex] : "?"
-                                let endTime = endIndex < finalTimetable[weekdays[curr]]!.count ? finalTimetable[weekdays[curr]]![endIndex] : "?"
+                                //Making sure current index has 1 or 2 indices after it
+                                let startTime = startIndex < finalTimetable[Constants.weekdays[curr]]!.count ? finalTimetable[Constants.weekdays[curr]]![startIndex] : "?"
+                                let endTime = endIndex < finalTimetable[Constants.weekdays[curr]]!.count ? finalTimetable[Constants.weekdays[curr]]![endIndex] : "?"
                                 if (endTime.contains("-")){
                                     Weekday(gradient:  gradients[curr], course: course, timeFrame: "\(startTime.first!.isLetter ? "Time not found" : endTime)")
                                         .onTapGesture{
@@ -126,11 +104,7 @@ struct TimeTable: View{
     
     
 }
-//struct TimeTable_Previews: PreviewProvider {
-//    static var previews: some View {
-//        TimeTable()
-//    }
-//}
+
 struct Circle: Shape {
     func path(in rect: CGRect) -> Path {
         var path = Path()
@@ -138,6 +112,15 @@ struct Circle: Shape {
         let height = rect.size.height
         path.addEllipse(in: CGRect(x: 0.00028*width, y: 0.00028*height, width: 0.9985*width, height: 0.9985*height))
         return path
+    }
+    static func circle(x: CGFloat, y: CGFloat, width: CGFloat, height: CGFloat, foregroundStyle: LinearGradient) -> any View {
+        var body: some View  {
+            Circle()
+                .frame(width: width, height: height)
+                .foregroundStyle(foregroundStyle)
+                .position(x: x, y: y)
+        }
+        return body
     }
 }
 

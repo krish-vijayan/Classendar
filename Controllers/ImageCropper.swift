@@ -83,7 +83,6 @@ struct ImageCropper: UIViewControllerRepresentable{
         cropViewController.cancelButtonColor = .red
         cropViewController.doneButtonColor = .systemBlue
         
-//        cropViewController.doneButtonTitle = "Monday"
         return cropViewController
     }
 }
