@@ -7,6 +7,15 @@
 
 An iOS app that takes an image of a post-secondary/higher-education student's class calendar and turns it into a deck of cards.
 
+## How To Use
+1) Download Classendar.zip and open Classendar.swiftpm with XCode 14.3 or higher. 
+2) Select image of class calendar from either photo library or use camera to take a picture of it. 
+3) Crop each column of classes for each specified weekday. 
+4) Click Done
+
+## Demo
+https://youtu.be/RqfgMU-SmhA
+
 ## Technologies Used
 
 * Xcode 14.3 
@@ -34,9 +43,6 @@ dictionary is stored in UserDefaults and is then passed through some logic to fi
   <img src="https://user-images.githubusercontent.com/96496079/232660993-887ab4ee-a6be-43f6-a69a-88fbe2de579a.png" width="400" />
   <img src="https://user-images.githubusercontent.com/96496079/232661005-6fd84705-5295-4493-a122-cf80b685e8c5.png" width="400" />
 </p>
-
-## Demo
-https://youtu.be/RqfgMU-SmhA
 
 ## Future Updates
 
