@@ -22,8 +22,8 @@ An iOS app that takes an image of a post-secondary/higher-education student's cl
 After user selects class calendar either from their photo library or their camera, they will then have to crop the column of classes for each day of 
 the week. After each crop, the text is then read by Vision and parsed using Regex to identify class codes and time ranges. This information is  then 
 stored inside of a dictionary with the key being the day of the week, and the value being an array of class codes and the following time ranges. This 
-dictionary is stored in UserDefaults and is then passed through some logic to finally be displayed on the deck of cards.  
-
+dictionary is stored in UserDefaults and is then passed through some logic to finally be displayed on the deck of cards. 
+ 
 ## Screenshots
 
 <p float="left"> 
@@ -37,5 +37,10 @@ dictionary is stored in UserDefaults and is then passed through some logic to fi
 
 ## Demo
 https://youtu.be/RqfgMU-SmhA
+
+## Future Updates
+
+Currently the cropping of the invidual columns for each day of the week is pretty tedious. Therefore, in the future I plan to implement some technology that automatically detects each columm and then reads the text from each column in order. 
+
 
 
