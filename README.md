@@ -1,9 +1,11 @@
 #  WWDC23 Swift Student Challenge Submission
 
+<h1>Classendar
+  <img align="right" src="https://user-images.githubusercontent.com/96496079/232795273-67325589-82e1-45a6-aeca-ecc2f4688dd3.png" width=74px>
+</h1>
+<br/>
 
-## Classendar 
-
-An app that takes an image of a post-secondary/higher-education student's class calendar and turns it into a deck of cards.
+An iOS app that takes an image of a post-secondary/higher-education student's class calendar and turns it into a deck of cards.
 
 ## Technologies Used
 
