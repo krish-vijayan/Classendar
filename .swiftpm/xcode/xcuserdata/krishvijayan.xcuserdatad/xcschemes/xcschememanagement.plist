@@ -4,10 +4,40 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Calendarize.xcscheme_^#shared#^_</key>
+		<key>Calendarize-Package.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
+		</dict>
+		<key>Calendarize.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+		<key>Class.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
+		<key>Classan.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
+		<key>Classandar.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+		<key>Classendar.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>0</integer>
+		</dict>
+		<key>My App.swiftpm-Package.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
@@ -18,6 +48,16 @@
 			<true/>
 		</dict>
 		<key>Calendarize</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>Classendar</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>My App.swiftpm</key>
 		<dict>
 			<key>primary</key>
 			<true/>

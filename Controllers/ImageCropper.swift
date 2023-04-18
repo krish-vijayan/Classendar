@@ -54,14 +54,10 @@ struct ImageCropper: UIViewControllerRepresentable{
                 print("default")
             }
             }
-//            print(self.parent.timetable)
-            if (self.parent.day <= 5){
                 self.parent.day += 1
-            }
+            
             self.parent.imageCropper = false
             
-
-            print(self.parent.day)
             self.parent.image = originalImage
             cropViewController.dismiss(animated: true)
         }
@@ -84,6 +80,8 @@ struct ImageCropper: UIViewControllerRepresentable{
         cropViewController.delegate = context.coordinator
        
         cropViewController.doneButtonTitle = days[day]
+        cropViewController.cancelButtonColor = .red
+        cropViewController.doneButtonColor = .systemBlue
         
 //        cropViewController.doneButtonTitle = "Monday"
         return cropViewController

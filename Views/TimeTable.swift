@@ -10,7 +10,7 @@ import SwiftUI
 import ShuffleDeck
 
 struct TimeTable: View{
-    @Binding var finalTimetable: [String: [[String]]]
+    @Binding var finalTimetable: [String: [String]]
     
     //    AngularGradient(gradient: Gradient(colors: [.green, .blue, .black, .green, .blue, .black, .green]), center: .center)
     let days = [0,1,2,3,4]
@@ -25,24 +25,23 @@ struct TimeTable: View{
     @State var offSet = 100
     var body: some View {
         ZStack{
-            
-            Monday()
+        
+            Circle()
                 .frame(width: 400, height: 400)
                 .foregroundStyle(gradients[curr])
                 .blur(radius: 10.0)
                 .position(x: 700, y: 100)
                 .opacity(0.4)
             
-            Monday()
+            Circle()
                 .frame(width: 400, height: 400)
                 .foregroundStyle(gradients[curr])
                 .blur(radius: 10.0)
                 .position(x: 400, y: 900)
                 .opacity(0.4)
             
-            //            Color.white.ignoresSafeArea().blur(radius: 1000.0)
-            Monday()
-                .frame(width: 1000, height: 1000)
+            Circle()
+                .frame(width: 1200, height: 1000)
                 .opacity(0.4)
                 .foregroundColor(.black)
             
@@ -95,14 +94,33 @@ struct TimeTable: View{
                     .shadow(radius: 10)
                     
                     VStack{
-                        ForEach(finalTimetable[weekdays[curr]]![0], id:\.self){ course in
-                            Weekday(gradient:  gradients[curr], course: course, timeFrame: "8:30AM-9:30AM")
+                        ForEach(Array(finalTimetable[weekdays[curr]]!.enumerated()), id:\.offset){ index, course in
+                            let startIndex = index + 1
+                            let endIndex = index + 2
+                            if let courseCode = course.first, courseCode.isLetter {
+                                let startTime = startIndex < finalTimetable[weekdays[curr]]!.count ? finalTimetable[weekdays[curr]]![startIndex] : "?"
+                                let endTime = endIndex < finalTimetable[weekdays[curr]]!.count ? finalTimetable[weekdays[curr]]![endIndex] : "?"
+                                if (endTime.contains("-")){
+                                    Weekday(gradient:  gradients[curr], course: course, timeFrame: "\(startTime.first!.isLetter ? "Time not found" : endTime)")
+                                        .onTapGesture{
+                                            print(course)
+                                        }
+                                    
+                                }else {
+                                    Weekday(gradient:  gradients[curr], course: course, timeFrame: "\(startTime.first!.isLetter ? "?" : startTime) - \(endTime.first!.isLetter ? "?" : endTime)")
+                                        .onTapGesture{
+                                            print(course)
+                                        }
+                                    
+                                }
+                            }
                         }
                     }
                 }
             }
             
         }
+        .background(.black)
     }
     
     
@@ -113,7 +131,7 @@ struct TimeTable: View{
 //        TimeTable()
 //    }
 //}
-struct Monday: Shape {
+struct Circle: Shape {
     func path(in rect: CGRect) -> Path {
         var path = Path()
         let width = rect.size.width
@@ -140,21 +158,12 @@ struct Weekday: View {
             Text(timeFrame)
             
         }
-        .fontWeight(.light)
-        .frame(width: 250, height: 70)
+        .fontWeight(.semibold)
+        .frame(width: 270, height: 60)
         .background(gradient)
         .clipShape(RoundedRectangle(cornerRadius: 10.0))
         .shadow(radius: 8.0)
-        .padding(10)
+        .padding(1)
     }
     
-}
-struct ListView: View {
-    let items = ["Item 1", "Item 2", "Item 3", "Item 4", "Item 5"]
-    
-    var body: some View {
-        List(items, id: \.self) { item in
-            Text(item)
-        }
-    }
 }
