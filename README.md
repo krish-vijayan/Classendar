@@ -21,6 +21,7 @@ https://youtu.be/RqfgMU-SmhA
 * Xcode 14.3 
 * Swift 
 * SwiftUI
+* Core ML
 * UIKit
 * Vision
 * ShuffleIt (https://github.com/dscyrescotti/ShuffleIt#shuffledeck) 
